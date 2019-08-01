@@ -35,4 +35,9 @@ public class TrackController {
         trackService.deleteTrackById(id);
         return new ResponseEntity<>(trackService.getTrackById(id),HttpStatus.OK);
     }
+    @GetMapping("track/all")
+    public ResponseEntity<?> getAllTracks() {
+        List<Track> listOfTracks=trackService.getAllTracks();
+        return new ResponseEntity<>(listOfTracks,HttpStatus.OK);
+    }
 }
