@@ -24,5 +24,10 @@ public class TrackController {
         System.out.println(savedTrack);
         return new ResponseEntity<>(savedTrack, HttpStatus.OK);
     }
-
+    @GetMapping("track")
+    public ResponseEntity<?> getTrackById(@RequestParam int id)
+    {
+        Track foundTrackById=trackService.getTrackById(id);
+        return new ResponseEntity<>(foundTrackById,HttpStatus.OK);
+    }
 }
