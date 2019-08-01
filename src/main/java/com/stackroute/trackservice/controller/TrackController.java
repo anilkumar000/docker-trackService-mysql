@@ -40,4 +40,11 @@ public class TrackController {
         List<Track> listOfTracks=trackService.getAllTracks();
         return new ResponseEntity<>(listOfTracks,HttpStatus.OK);
     }
+
+    @PutMapping("track")
+    public ResponseEntity<?> updateTrack(@RequestParam int id, @RequestBody Track trackToUpdate) {
+        Track updatedTrack=trackService.updateTrack(id,trackToUpdate);
+        return new ResponseEntity<>(updatedTrack,HttpStatus.OK);
+    }
+
 }
