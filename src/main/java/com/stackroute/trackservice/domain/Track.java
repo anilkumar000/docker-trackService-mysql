@@ -3,6 +3,10 @@ package com.stackroute.trackservice.domain;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * Making track as entity to store tracks details
+ * like trackId, trackName, comments into table of DB.
+ */
 @Entity
 public class Track {
     @Id

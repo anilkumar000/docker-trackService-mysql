@@ -17,6 +17,12 @@ public class TrackController {
     public TrackController(TrackService trackService) {
         this.trackService = trackService;
     }
+
+    /**
+     * Insert track into the database
+     * @Input Track to be inserted
+     * @Output Newly created track
+     */
     @PostMapping("track")
     public ResponseEntity<?> saveTrack(@RequestBody Track track) {
         System.out.println(track);
@@ -24,23 +30,46 @@ public class TrackController {
         System.out.println(savedTrack);
         return new ResponseEntity<>(savedTrack, HttpStatus.OK);
     }
+
+    /**
+     * Search Track
+     * @Input id Id of the track
+     * @Output Track
+     */
     @GetMapping("track")
     public ResponseEntity<?> getTrackById(@RequestParam int id)
     {
         Track foundTrackById=trackService.getTrackById(id);
         return new ResponseEntity<>(foundTrackById,HttpStatus.OK);
     }
+
+    /**
+     * Delete track by ID
+     * @Input  Track Id to be deleted
+     * @Output Deleted Track
+     */
     @DeleteMapping("track")
     public ResponseEntity<?> deleteTrackById(@RequestParam int id) {
         trackService.deleteTrackById(id);
         return new ResponseEntity<>(trackService.getTrackById(id),HttpStatus.OK);
     }
+
+    /**
+     * Get all tracks
+     * @Output All tracks in the database
+     */
     @GetMapping("track/all")
     public ResponseEntity<?> getAllTracks() {
         List<Track> listOfTracks=trackService.getAllTracks();
         return new ResponseEntity<>(listOfTracks,HttpStatus.OK);
     }
 
+    /**
+     * Update Track by Id.
+     * @Input Id of the track to be updated.
+     * @pOutput Track object containing updated track details.
+     * @return Updated track
+     */
     @PutMapping("track")
     public ResponseEntity<?> updateTrack(@RequestParam int id, @RequestBody Track trackToUpdate) {
         Track updatedTrack=trackService.updateTrack(id,trackToUpdate);

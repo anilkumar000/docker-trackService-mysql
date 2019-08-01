@@ -4,6 +4,10 @@ import com.stackroute.trackservice.domain.Track;
 
 import java.util.List;
 
+/**
+ * TrackService Interface provides method declarations for all the operations supported
+ * in the application.
+ */
 public interface TrackService {
     public Track saveTrack(Track track);
     public Track getTrackById(int id);
