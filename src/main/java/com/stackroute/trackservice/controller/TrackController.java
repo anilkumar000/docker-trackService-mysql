@@ -30,4 +30,9 @@ public class TrackController {
         Track foundTrackById=trackService.getTrackById(id);
         return new ResponseEntity<>(foundTrackById,HttpStatus.OK);
     }
+    @DeleteMapping("track")
+    public ResponseEntity<?> deleteTrackById(@RequestParam int id) {
+        trackService.deleteTrackById(id);
+        return new ResponseEntity<>(trackService.getTrackById(id),HttpStatus.OK);
+    }
 }
