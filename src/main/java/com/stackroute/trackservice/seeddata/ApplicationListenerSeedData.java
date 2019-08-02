@@ -7,11 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-
+/*
+    * Class listens to Application Context events i.e. when application
+    * starts or reloads,it seeds predefined data into the database.
+        */
 @Component
 public class ApplicationListenerSeedData implements ApplicationListener<ContextRefreshedEvent> {
+    //   TrackService to perform operations on DB.
+    private TrackService trackService;
+
     @Autowired
-    TrackService trackService;
+    public ApplicationListenerSeedData(TrackService trackService) {
+        this.trackService = trackService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Track track1=new Track(1,"Promises","Album by Chainsmokers");
