@@ -32,7 +32,9 @@ public class TrackController {
             return new ResponseEntity<>(savedTrack, HttpStatus.CREATED);
         }
         catch (TrackAlreadyExistsException ex){
+            ex.printStackTrace();
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+
         }
 
 
