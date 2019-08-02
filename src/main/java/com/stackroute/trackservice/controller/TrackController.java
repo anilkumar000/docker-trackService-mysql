@@ -76,4 +76,10 @@ public class TrackController {
         return new ResponseEntity<>(updatedTrack,HttpStatus.OK);
     }
 
+    @GetMapping("track/search/{trackName}")
+    public ResponseEntity<?> selectTrackByName(@PathVariable String trackName){
+        List<Track> foundTracks=trackService.selectTrackByName(trackName);
+        return new ResponseEntity<>(foundTracks,HttpStatus.FOUND);
+    }
+
 }

@@ -76,4 +76,10 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.save(trackRepository.findById(id).get());
 
     }
+
+    @Override
+    public List<Track> selectTrackByName(String trackname){
+     List<Track> foundTracks=trackRepository.selectTrackByName(trackname);
+     return foundTracks;
+    }
 }

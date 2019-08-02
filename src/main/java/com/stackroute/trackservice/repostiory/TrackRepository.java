@@ -2,11 +2,17 @@ package com.stackroute.trackservice.repostiory;
 
 import com.stackroute.trackservice.domain.Track;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Interface to perform database operations with a dynamic DB
  */
 @Repository
 public interface TrackRepository extends JpaRepository<Track,Integer> {
+
+    @Query("select t from Track t where t.trackName like %?1%")
+    List<Track> selectTrackByName(String trackName);
 }
