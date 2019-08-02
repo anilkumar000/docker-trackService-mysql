@@ -1,6 +1,8 @@
 package com.stackroute.trackservice.controller;
 
 import com.stackroute.trackservice.domain.Track;
+import com.stackroute.trackservice.exceptions.TrackAlreadyExistsException;
+import com.stackroute.trackservice.exceptions.TrackNotFoundException;
 import com.stackroute.trackservice.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +27,15 @@ public class TrackController {
      */
     @PostMapping("track")
     public ResponseEntity<?> saveTrack(@RequestBody Track track) {
-        System.out.println(track);
-        Track savedTrack=trackService.saveTrack(track);
-        System.out.println(savedTrack);
-        return new ResponseEntity<>(savedTrack, HttpStatus.OK);
+        try {
+            Track savedTrack=trackService.saveTrack(track);
+            return new ResponseEntity<>(savedTrack, HttpStatus.CREATED);
+        }
+        catch (TrackAlreadyExistsException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+
     }
 
     /**
@@ -39,8 +46,13 @@ public class TrackController {
     @GetMapping("track/{id}")
     public ResponseEntity<?> getTrackById(@PathVariable int id)
     {
-        Track foundTrackById=trackService.getTrackById(id);
-        return new ResponseEntity<>(foundTrackById,HttpStatus.OK);
+        try {
+            Track foundTrackById = trackService.getTrackById(id);
+            return new ResponseEntity<>(foundTrackById, HttpStatus.FOUND);
+        }
+        catch (TrackNotFoundException ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
@@ -50,8 +62,14 @@ public class TrackController {
      */
     @DeleteMapping("track")
     public ResponseEntity<?> deleteTrackById(@RequestParam int id) {
-        trackService.deleteTrackById(id);
-        return new ResponseEntity<>(trackService.getTrackById(id),HttpStatus.OK);
+        try {
+            Track deletedTrack=trackService.deleteTrackById(id).get();
+            return new ResponseEntity<>(deletedTrack,HttpStatus.OK);
+        }
+        catch (TrackNotFoundException ex){
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.CONFLICT);
+        }
+
     }
 
     /**
@@ -60,26 +78,47 @@ public class TrackController {
      */
     @GetMapping("track")
     public ResponseEntity<?> getAllTracks() {
-        List<Track> listOfTracks=trackService.getAllTracks();
-        return new ResponseEntity<>(listOfTracks,HttpStatus.OK);
+        try {
+            List<Track> listOfTracks=trackService.getAllTracks();
+            return new ResponseEntity<>(listOfTracks,HttpStatus.OK);
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>("Nothing is present",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     /**
      * Update Track by Id.
      * @Input Id of the track to be updated.
-     * @pOutput Track object containing updated track details.
-     * @return Updated track
+     * @Input Track object containing updated track details.
+     * @Output Updated track
      */
     @PutMapping("track")
     public ResponseEntity<?> updateTrack(@RequestParam int id, @RequestBody Track trackToUpdate) {
-        Track updatedTrack=trackService.updateTrack(id,trackToUpdate);
-        return new ResponseEntity<>(updatedTrack,HttpStatus.OK);
+        try {
+            Track updatedTrack=trackService.updateTrack(id,trackToUpdate);
+            return new ResponseEntity<>(updatedTrack,HttpStatus.OK);
+        }catch (TrackNotFoundException ex){
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
+    /**
+     * Search Track by Name.
+     * @Input String  of the track name to search for.
+     * @Output List of found tracks
+     */
     @GetMapping("tracks/{trackName}")
     public ResponseEntity<?> selectTrackByName(@PathVariable String trackName){
-        List<Track> foundTracks=trackService.selectTrackByName(trackName);
-        return new ResponseEntity<>(foundTracks,HttpStatus.FOUND);
+        try {
+            List<Track> foundTracks=trackService.selectTrackByName(trackName);
+            return new ResponseEntity<>(foundTracks,HttpStatus.FOUND);
+        }catch (TrackNotFoundException ex){
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
 }
