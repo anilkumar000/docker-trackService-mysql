@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface TrackRepository extends JpaRepository<Track,Integer> {
-
+// @Query annotation is used to pass queries to parse the data in DB
     @Query("select t from Track t where t.trackName like %?1%")
     List<Track> selectTrackByName(String trackName);
 }
