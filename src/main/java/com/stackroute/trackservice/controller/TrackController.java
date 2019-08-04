@@ -5,6 +5,7 @@ import com.stackroute.trackservice.exceptions.TrackAlreadyExistsException;
 import com.stackroute.trackservice.exceptions.TrackNotFoundException;
 import com.stackroute.trackservice.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.List;
 public class TrackController {
     TrackService trackService;
     @Autowired
-    public TrackController(TrackService trackService) {
+    public TrackController(@Qualifier("trackServiceImpl") TrackService trackService) {
         this.trackService = trackService;
     }
 

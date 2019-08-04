@@ -4,6 +4,7 @@ import com.stackroute.trackservice.domain.Track;
 import com.stackroute.trackservice.exceptions.TrackAlreadyExistsException;
 import com.stackroute.trackservice.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.PropertySources;
@@ -28,7 +29,7 @@ public class ApplicationListenerSeedData implements ApplicationListener<ContextR
     @Autowired
     public Environment environment;
     @Autowired
-    public ApplicationListenerSeedData(TrackService trackService) {
+    public ApplicationListenerSeedData(@Qualifier("trackServiceDummyImpl") TrackService trackService) {
         this.trackService = trackService;
     }
 
