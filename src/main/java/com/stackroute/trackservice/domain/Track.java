@@ -1,5 +1,9 @@
 package com.stackroute.trackservice.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -8,51 +12,17 @@ import javax.persistence.Id;
  * like trackId, trackName, comments into table of DB.
  */
 @Entity
+//generates no-arg constructor
+@NoArgsConstructor
+//generates all-args constructor with all properties in the class
+@AllArgsConstructor
+//generates Getter,Setter Methods,toString() and hashcode()
+@Data
 public class Track {
     @Id
     private int trackId;
     private String trackName;
     private String comments;
 
-    public Track() {
-    }
 
-    public Track(int trackId, String trackName, String comments) {
-        this.trackId = trackId;
-        this.trackName = trackName;
-        this.comments = comments;
-    }
-
-    public int getTrackId() {
-        return trackId;
-    }
-
-    public void setTrackId(int trackId) {
-        this.trackId = trackId;
-    }
-
-    public String getTrackName() {
-        return trackName;
-    }
-
-    public void setTrackName(String trackName) {
-        this.trackName = trackName;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    @Override
-    public String toString() {
-        return "Track{" +
-                "trackId=" + trackId +
-                ", trackName='" + trackName + '\'' +
-                ", comments='" + comments + '\'' +
-                '}';
-    }
 }
