@@ -29,7 +29,7 @@ public class ApplicationListenerSeedData implements ApplicationListener<ContextR
     @Autowired
     public Environment environment;
     @Autowired
-    public ApplicationListenerSeedData(@Qualifier("trackServiceDummyImpl") TrackService trackService) {
+    public ApplicationListenerSeedData( TrackService trackService) {
         this.trackService = trackService;
     }
 

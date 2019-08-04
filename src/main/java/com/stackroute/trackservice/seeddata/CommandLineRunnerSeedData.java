@@ -32,7 +32,7 @@ public class CommandLineRunnerSeedData implements CommandLineRunner {
    private TrackService trackService;
 
     @Autowired
-    public CommandLineRunnerSeedData(@Qualifier("trackServiceImpl") TrackService trackService){
+    public CommandLineRunnerSeedData( TrackService trackService){
         this.trackService=trackService;
 
     }
